@@ -7,50 +7,117 @@
 template <typename T>
 class ForwardList : public List<T> {
     public:
-        ForwardList() : List<T>() {}
+        ForwardList() : List<T>() {
+            this->head = this->tail = nullptr;
+            this->nodes = 0;
+        }
 
         T front() {
-            // TODO
+            if(this->head)
+                return this->head->data;
+            throw out_of_range("Lista vacía");
         }
 
         T back() {
-            // TODO
+            if(this->head)
+                return this->tail->data;
+            throw out_of_range("Lista vacía");
         }
 
         void push_front(T value) {
-            // TODO
+            auto *newNode = new Node <T> (value);
+            if (this->head){
+                newNode->next = this->head;
+                this->head = newNode;
+            }else{
+                this->head = newNode;
+
+            }
+            this->nodes++;
         }
 
         void push_back(T value) {
-            // TODO
+            auto newNode = new Node <T> (value);
+            newNode->next = nullptr;
+            if (this->head){
+                auto temp = this->head;
+                while (temp->next!=NULL)
+                    temp = temp->next;
+                temp->next=newNode;
+            }else
+                this->head=newNode;
+            this->nodes++;
         }
 
         void pop_front() {
-            // TODO
+            if (this->nodes>1) {
+                auto temp = this->head;
+                this->head = this->head->next;
+                delete temp;
+                this->nodes--;
+            }else if(this->nodes==1){
+                delete this->head;
+                this->head = nullptr;
+                this->nodes--;
+            }else
+                throw out_of_range("Lista vacía");
+
         }
 
         void pop_back() {
-            // TODO
+            auto last = this->head;
+            auto previousLast = this->head;
+            if(this->nodes>1){
+                for (int i =1; i<this->nodes-2;i++)
+                    previousLast=previousLast->next;
+                while(last->next!=NULL)
+                    last= last->next;
+                previousLast->next = nullptr;
+                delete last;
+                this->nodes--;
+            }else if(this->nodes==1){
+                delete this->head;
+                this->head = nullptr;
+                this->nodes--;
+            }else
+                throw out_of_range("Lista vacía");
+
+
         }
 
-        T operator[](int index) {
-            // TODO
+        T operator[](int index) {//similar tu get element at index
+            if(index >this->nodes-1) {
+                throw out_of_range("Lista vacía");
+            }
+            auto temp = this->head;
+            for (int i=0; i<index; i++)
+                temp =temp->next;
+            return temp->data;
+
         }
 
-        bool empty() {
-            // TODO
-        }
+        bool empty() {return this->head == nullptr;}
 
         int size() {
-            // TODO
+            return this->nodes;
         }
 
         void clear() {
-            // TODO
+            if(this->head) {
+                this->head->killSelf();
+                this->head = nullptr;
+                this->nodes = 0;
+            }else
+                throw out_of_range("Lista vacía");
         }
 
         void sort() {
-            // TODO
+            auto temp = this->head->next;
+            for(int i=0; i<this->nodes-1; i++)
+                for(int j = 0; j<this->nodes-i-1; j++ )
+                    if(this->head->data > temp->data){
+                        swap(this->head->data, temp->data);
+            }
         }
     
         void reverse() {

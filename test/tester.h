@@ -5,7 +5,7 @@
 #include <iostream>
 #include <assert.h>
 
-#include "../mock/mocker.h"
+#include "../mock/mocker.cpp"
 #include "../forward.h"
 #include "../linked.h"
 #include "../circular.h"
