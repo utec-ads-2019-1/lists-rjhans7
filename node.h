@@ -6,9 +6,15 @@ struct Node {
     T data;
     Node<T>* next;
     Node<T>* prev;
-
+    explicit Node(T data){
+        this->data= data;
+        this->next = nullptr;
+        this->next =nullptr;
+    }
     void killSelf() {
-        // TODO
+        if(next!=nullptr)
+            next->killSelf();
+        delete this;
     }
 };
 

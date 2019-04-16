@@ -2,7 +2,7 @@
 #define LIST_H
 
 #include "node.h"
-
+#include <algorithm>
 template <typename T>
 class List {
     protected:

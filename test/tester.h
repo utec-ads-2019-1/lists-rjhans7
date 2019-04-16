@@ -5,7 +5,7 @@
 #include <iostream>
 #include <assert.h>
 
-#include "../mock/mocker.h"
+#include "../mock/mocker.cpp"
 #include "../forward.h"
 #include "../linked.h"
 #include "../circular.h"
@@ -25,7 +25,7 @@ using namespace std;
 #   define ASSERT(condition, message) do { } while (false)
 #endif
 
-#define NUMBER_OF_TESTS 10
+#define NUMBER_OF_TESTS 2
 
 enum Collection { forward_list, linked_list, circular_list };
 
