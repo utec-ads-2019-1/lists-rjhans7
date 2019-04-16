@@ -131,11 +131,12 @@ class ForwardList : public List<T> {
         void reverse() {
             auto first = this->head;
             auto last = this->head;
-            for (int i=0; i <this->nodes/2-1; i++) {
+            for (int i=0; i <this->nodes/2; i++) {
                 for (int j = 0; j < this->nodes - 1 - i; j++)
                     last =last->next;
                 swap(first->data, last->data);
                 first=first->next;
+                last=this->head;
             }
 
         }
@@ -145,6 +146,7 @@ class ForwardList : public List<T> {
                 cout << temp->data <<"- ";
                 temp=temp->next;
             }
+            cout << temp->data;
         }
         string name() {
             print();
