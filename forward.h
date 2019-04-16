@@ -19,9 +19,14 @@ class ForwardList : public List<T> {
         }
 
         T back() {
-            if(this->head)
-                return this->tail->data;
-            throw out_of_range("Lista vacía");
+            if (this->head) {
+                auto temp = this->head;
+                while (temp->next != nullptr)
+                    temp = temp->next;
+                return temp->data;
+            } else {
+                throw out_of_range("Lista vacía");
+            }
         }
 
         void push_front(T value) {
@@ -41,7 +46,7 @@ class ForwardList : public List<T> {
             newNode->next = nullptr;
             if (this->head){
                 auto temp = this->head;
-                while (temp->next!=NULL)
+                while (temp->next!= nullptr)
                     temp = temp->next;
                 temp->next=newNode;
             }else
@@ -68,9 +73,9 @@ class ForwardList : public List<T> {
             auto last = this->head;
             auto previousLast = this->head;
             if(this->nodes>1){
-                for (int i =1; i<this->nodes-2;i++)
+                for (int i =0; i<this->nodes-2;i++)
                     previousLast=previousLast->next;
-                while(last->next!=NULL)
+                while(last->next!= nullptr)
                     last= last->next;
                 previousLast->next = nullptr;
                 delete last;
@@ -85,8 +90,8 @@ class ForwardList : public List<T> {
 
         }
 
-        T operator[](int index) {//similar tu get element at index
-            if(index >this->nodes-1) {
+        T operator[](int index) {
+            if(index >this->nodes) {
                 throw out_of_range("Lista vacía");
             }
             auto temp = this->head;
@@ -101,9 +106,9 @@ class ForwardList : public List<T> {
         int size() {
             return this->nodes;
         }
-
+        //Revisar
         void clear() {
-            if(this->head) {
+            if(this->nodes>0) {
                 this->head->killSelf();
                 this->head = nullptr;
                 this->nodes = 0;
@@ -112,19 +117,37 @@ class ForwardList : public List<T> {
         }
 
         void sort() {
-            auto temp = this->head->next;
-            for(int i=0; i<this->nodes-1; i++)
-                for(int j = 0; j<this->nodes-i-1; j++ )
-                    if(this->head->data > temp->data){
-                        swap(this->head->data, temp->data);
+            auto temp = this->head;
+            for (int i = 0; i < this->nodes - 1; i++) {
+                temp = this->head;
+                for (int j = 0; j < this->nodes - i - 1; j++) {
+                    if (temp->data > temp->next->data)
+                        swap(temp->data, temp->next->data);
+                    temp = temp->next;
+                }
             }
         }
     
         void reverse() {
-            // TODO
-        }
+            auto first = this->head;
+            auto last = this->head;
+            for (int i=0; i <this->nodes/2-1; i++) {
+                for (int j = 0; j < this->nodes - 1 - i; j++)
+                    last =last->next;
+                swap(first->data, last->data);
+                first=first->next;
+            }
 
+        }
+        void print(){
+            auto temp =this->head;
+            while (temp->next!= nullptr){
+                cout << temp->data <<"- ";
+                temp=temp->next;
+            }
+        }
         string name() {
+            print();
             return "Forward List";
         }
 
