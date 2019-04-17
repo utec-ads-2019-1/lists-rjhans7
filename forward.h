@@ -30,7 +30,7 @@ class ForwardList : public List<T> {
         }
 
         void push_front(T value) {
-            auto *newNode = new Node <T> (value);
+            auto newNode = new Node <T> (value);
             if (this->head){
                 newNode->next = this->head;
                 this->head = newNode;
@@ -92,7 +92,7 @@ class ForwardList : public List<T> {
 
         T operator[](int index) {
             if(index >this->nodes) {
-                throw out_of_range("Lista vacía");
+                throw out_of_range("Out of range!");
             }
             auto temp = this->head;
             for (int i=0; i<index; i++)

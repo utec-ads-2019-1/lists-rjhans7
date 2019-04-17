@@ -7,34 +7,83 @@
 template <typename T>
 class LinkedList : public List<T> {
     public:
-        LinkedList() : List<T>() {}
+        LinkedList() : List<T>() {
+            this->head = this->tail= nullptr;
+            this->nodes=0;
+        }
 
         T front() {
-            // TODO
+            if(this->head)
+                return this->head->data;
+            else
+                throw out_of_range("Empty list!");
         }
 
         T back() {
-            // TODO
+            if(this->head)
+                return this->tail->data;
+            else
+                throw out_of_range("Empty list!");
         }
 
         void push_front(T value) {
-            // TODO
+            auto newNode = new Node <T> (value);
+            if (this->head){
+                newNode->next = this->head;
+                this->head->prev = newNode;
+                this->head = newNode;
+            }else{
+                this->head = this->tail = newNode;
+            }
+            this->nodes++;
         }
 
         void push_back(T value) {
-            // TODO
+            auto newNode = new Node<T> (value);
+            if(this->tail){
+                this->tail->next = newNode;
+                newNode->prev = this->tail;
+                this->tail = newNode;
+            }else
+                this->tail=this->head=newNode;
+        this->nodes++;
         }
 
         void pop_front() {
-            // TODO
+            if (this->nodes>1) {
+                auto temp = this->head;
+                this->head = this->head->next;
+                delete temp;
+                this->nodes--;
+            }else if(this->nodes==1){
+                delete this->head;
+                this->head = nullptr;
+                this->nodes--;
+            }else
+                throw out_of_range("Empty list!");
         }
 
         void pop_back() {
-            // TODO
+            if(this->nodes >1) {
+                auto temp = this->tail;
+                this->tail = this->tail->prev;
+                this->tail->next = nullptr;
+                delete temp;
+            }else if(this->nodes == 1){
+                delete this->tail;
+                this->tail= nullptr;
+            }
         }
 
         T operator[](int index) {
-            // TODO
+            if( (this->nodes<0) || (this->nodes >= index)){
+                throw out_of_range("Out of range!");
+            }
+            //Mejorar
+            auto temp = this->head;
+            for (int i=0; i<index; i++)
+                temp =temp->next;
+            return temp->data;
         }
 
         bool empty() {
