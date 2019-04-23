@@ -35,7 +35,7 @@ class ForwardList : public List<T> {
                 newNode->next = this->head;
                 this->head = newNode;
             }else{
-                this->head = newNode;
+                this->head = this->tail = newNode;
 
             }
             this->nodes++;
@@ -45,12 +45,10 @@ class ForwardList : public List<T> {
             auto newNode = new Node <T> (value);
             newNode->next = nullptr;
             if (this->head){
-                auto temp = this->head;
-                while (temp->next!= nullptr)
-                    temp = temp->next;
-                temp->next=newNode;
+                this->tail->next =newNode;
+                this->tail = newNode;
             }else
-                this->head=newNode;
+                this->head=this->tail=newNode;
             this->nodes++;
         }
 
@@ -62,7 +60,7 @@ class ForwardList : public List<T> {
                 this->nodes--;
             }else if(this->nodes==1){
                 delete this->head;
-                this->head = nullptr;
+                this->head=this->tail = nullptr;
                 this->nodes--;
             }else
                 throw out_of_range("Lista vacía");
@@ -70,19 +68,18 @@ class ForwardList : public List<T> {
         }
 
         void pop_back() {
-            auto last = this->head;
+            auto last = this->tail;
             auto previousLast = this->head;
             if(this->nodes>1){
                 for (int i =0; i<this->nodes-2;i++)
                     previousLast=previousLast->next;
-                while(last->next!= nullptr)
-                    last= last->next;
                 previousLast->next = nullptr;
+                this->tail = previousLast;
                 delete last;
                 this->nodes--;
             }else if(this->nodes==1){
                 delete this->head;
-                this->head = nullptr;
+                this->head = this->tail=nullptr;
                 this->nodes--;
             }else
                 throw out_of_range("Lista vacía");
@@ -106,7 +103,6 @@ class ForwardList : public List<T> {
         int size() {
             return this->nodes;
         }
-        //Revisar
         void clear() {
             if(this->nodes>0) {
                 this->head->killSelf();
@@ -153,15 +149,18 @@ class ForwardList : public List<T> {
         }
 
         ForwardIterator<T> begin() {
-            // TODO
+            auto iter_begin = new ForwardIterator<T>(this->head);
+            return *iter_begin;
         }
 
 	    ForwardIterator<T> end() {
-            // TODO
+            auto iter_end = new ForwardIterator<T>(this->tail);
+            return *iter_end;
         }
 
         void merge(ForwardList<T> list) {
-            // TODO
+            for (int i = 0; i <list.nodes;i++)
+                this->push_back(list[i]);
         }
 };
 

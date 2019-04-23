@@ -149,15 +149,18 @@ class CircularLinkedList : public List<T> {
         }
 
         BidirectionalIterator<T> begin() {
-            // TODO
+            auto iter_begin = new BidirectionalIterator<T>(this->head);
+            return *iter_begin;
         }
 
 	    BidirectionalIterator<T> end() {
-            // TODO
+            auto iter_end = new BidirectionalIterator<T>(this->tail);
+            return *iter_end;
         }
 
         void merge(CircularLinkedList<T> list) {
-            // TODO
+            for (int i = 0; i < list.nodes; i++)
+                this->push_back(list[i]);
         }
 };
 
