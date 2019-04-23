@@ -9,13 +9,14 @@ struct Node {
     explicit Node(T data){
         this->data= data;
         this->next = nullptr;
-        this->next =nullptr;
+        this->prev =nullptr;
     }
     void killSelf() {
         if(next!=nullptr)
             next->killSelf();
         delete this;
     }
+
 };
 
 #endif

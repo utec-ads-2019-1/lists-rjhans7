@@ -1,7 +1,7 @@
 #include "tester.h"
 
 void Tester::execute() {
-    Collection collections[] = { forward_list/*, linked_list, circular_list*/ };
+    Collection collections[] = { forward_list, linked_list, circular_list};
     size_t numberOfCollections = sizeof(collections) / sizeof(collections[0]);
 
     for (int i = 0; i < numberOfCollections; i++) {
@@ -48,12 +48,15 @@ void Tester::testList(Collection collection) {
     ASSERT((*list)[1] == elements[1], "The " + list->name() + " operator [] is not working");
     list->push_back(elements[2]);
     list->push_back(elements[3]);
+
     list->pop_front();
+
     ASSERT(list->size() == 3, "The " + list->name() + " pop_front is not working");
     ASSERT(list->front() == elements[1], "The " + list->name() + " front is not working");
     ASSERT((*list)[2] == elements[3], "The " + list->name() + " operator [] is not working");
     list->push_back(elements[4]);
     list->push_back(elements[5]);
+
     list->pop_back();
     ASSERT(list->size() == 4, "The " + list->name() + " pop_back is not working");
     ASSERT(list->back() == elements[4], "The " + list->name() + " back is not working");
@@ -69,11 +72,9 @@ void Tester::testList(Collection collection) {
     list->clear();
     ASSERT(list->size() == 0, "The " + list->name() + " size or clear is not working");
     ASSERT(list->empty() == true, "The " + list->name() + " empty is not working");
-    cout << "Pasó todo" << endl;
-    cout << "--------------"<<endl;
 
-    //testSpecifics(collection, list);
-
+    testSpecifics(collection, list);
+    cout << "Paso toditito :p\n";
 }
 
 template <typename T>
@@ -108,7 +109,6 @@ void Tester::testForward(ForwardList<T>* list) {
     list1->push_back(elements[2]);
     list1->push_back(elements[3]);
     list1->push_back(elements[4]);
-
     list->merge(*list1);
     ASSERT(list->size() == 5, "The " + list->name() + " merge is not working");
 
