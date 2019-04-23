@@ -69,41 +69,65 @@ class LinkedList : public List<T> {
                 this->tail = this->tail->prev;
                 this->tail->next = nullptr;
                 delete temp;
+                this->nodes--;
             }else if(this->nodes == 1){
                 delete this->tail;
                 this->tail= nullptr;
+                this->nodes--;
             }
         }
 
         T operator[](int index) {
-            if( (this->nodes<0) || (this->nodes >= index)){
+            if( (this->nodes<0) || (this->nodes <= index)){
                 throw out_of_range("Out of range!");
+            }else if(index > this->nodes/2){
+                auto temp = this->tail;
+                for (int i=this->nodes-1; i>index; i--)
+                    temp =temp->prev;
+                return temp->data;
+            }else{
+                auto temp = this->head;
+                for (int i=0; i<index; i++)
+                    temp =temp->next;
+                return temp->data;
             }
-            //Mejorar
-            auto temp = this->head;
-            for (int i=0; i<index; i++)
-                temp =temp->next;
-            return temp->data;
+
         }
 
-        bool empty() {
-            // TODO
-        }
+        bool empty() { return this->head==nullptr;}
 
-        int size() {
-            // TODO
-        }
+        int size() { return this->nodes;}
 
         void clear() {
-            // TODO
+            if(this->nodes>0) {
+                this->head->killSelf();
+                this->head = nullptr;
+                this->tail = nullptr;
+                this->nodes = 0;
+            }else
+                throw out_of_range("La lista ya está vacía");
         }
 
         void sort() {
-            // TODO
+            auto temp = this->head;
+            for (int i = 0; i < this->nodes - 1; i++) {
+                temp = this->head;
+                for (int j = 0; j < this->nodes - i - 1; j++) {
+                    if (temp->data > temp->next->data)
+                        swap(temp->data, temp->next->data);
+                    temp = temp->next;
+                }
+            }
         }
     
         void reverse() {
-            // TODO
+            swap( this->tail, this->head);
+            auto temp1 = this->head;
+            do{
+                auto temp2=temp1->prev;
+                swap(temp1->next,temp1->prev);
+                temp1 = temp2;
+            }while(temp1->prev!= nullptr);
         }
 
         string name() {
