@@ -57,7 +57,7 @@ class LinkedList : public List<T> {
                 this->nodes--;
             }else if(this->nodes==1){
                 delete this->head;
-                this->head = nullptr;
+                this->head = this->tail = nullptr;
                 this->nodes--;
             }else
                 throw out_of_range("Empty list!");
@@ -72,13 +72,13 @@ class LinkedList : public List<T> {
                 this->nodes--;
             }else if(this->nodes == 1){
                 delete this->tail;
-                this->tail= nullptr;
+                this->tail = this->head = nullptr;
                 this->nodes--;
             }
         }
 
         T operator[](int index) {
-            if( (this->nodes<0) || (this->nodes <= index)){
+            if( (index <0) || (index >= this->nodes)){
                 throw out_of_range("Out of range!");
             }else if(index > this->nodes/2){
                 auto temp = this->tail;

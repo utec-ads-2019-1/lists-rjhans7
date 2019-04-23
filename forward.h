@@ -91,7 +91,7 @@ class ForwardList : public List<T> {
         }
 
         T operator[](int index) {
-            if(index >this->nodes) {
+            if(index >=this->nodes) {
                 throw out_of_range("Out of range!");
             }
             auto temp = this->head;
@@ -149,7 +149,6 @@ class ForwardList : public List<T> {
             cout << temp->data;
         }
         string name() {
-            print();
             return "Forward List";
         }
 
