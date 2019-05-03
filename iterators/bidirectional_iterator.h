@@ -20,13 +20,16 @@ class BidirectionalIterator : public Iterator<T> {
 
         BidirectionalIterator<T> operator++() {
             this->current = this->current->next;
+            // Falta return
         }
 
         BidirectionalIterator<T> operator--() {
             this->current = this->current->prev;
+            // Falta return
         }
 
         T operator*() {
+            // Si no hay data?
             return this->current->data;
         }
 };

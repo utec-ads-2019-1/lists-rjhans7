@@ -25,6 +25,7 @@ class ForwardIterator : public Iterator<T> {
         }
 
         T operator*() {
+            // Si no hay data?
             return this->current->data;
         }
 };
